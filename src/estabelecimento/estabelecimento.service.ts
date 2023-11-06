@@ -2,28 +2,34 @@ import { Injectable } from '@nestjs/common';
 import { CreateEstabelecimentoDto } from './dto/create-estabelecimento.dto';
 import { UpdateEstabelecimentoDto } from './dto/update-estabelecimento.dto';
 import { PrismaService } from 'prisma/prisma.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class EstabelecimentoService {
   constructor(private prisma: PrismaService) {}
 
-  create(createEstabelecimentoDto: CreateEstabelecimentoDto) {
-    return 'This action adds a new estabelecimento';
+  async create(createEstabelecimentoDto: CreateEstabelecimentoDto) {
+    const senhaHash = await bcrypt.hash(createEstabelecimentoDto.senha, 10);
+
+    const resultCreate = await this.prisma.estabelecimento.create({
+      data: { ...createEstabelecimentoDto, senha: senhaHash },
+    });
+    return resultCreate;
   }
 
   findAll() {
     return `This action returns all estabelecimento`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} estabelecimento`;
   }
 
-  update(id: number, updateEstabelecimentoDto: UpdateEstabelecimentoDto) {
+  update(id: string, updateEstabelecimentoDto: UpdateEstabelecimentoDto) {
     return `This action updates a #${id} estabelecimento`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} estabelecimento`;
   }
 }
