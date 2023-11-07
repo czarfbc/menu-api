@@ -15,7 +15,7 @@ model estabelecimento {
   nome       String
   credencial String
   senha      String
-  frete      Decimal
+  frete      Float
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
