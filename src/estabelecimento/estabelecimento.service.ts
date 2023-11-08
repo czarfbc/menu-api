@@ -25,11 +25,18 @@ export class EstabelecimentoService {
     return `This action returns a #${id} estabelecimento`;
   }
 
-  update(id: string, updateEstabelecimentoDto: UpdateEstabelecimentoDto) {
-    return `This action updates a #${id} estabelecimento`;
+  async update(id: string, updateEstabelecimentoDto: UpdateEstabelecimentoDto) {
+    const resultUpdate = await this.prisma.estabelecimento.update({
+      where: { id },
+      data: { ...updateEstabelecimentoDto },
+    });
+    return resultUpdate;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} estabelecimento`;
+  async remove(id: string) {
+    const resultRemove = await this.prisma.estabelecimento.delete({
+      where: { id },
+    });
+    return resultRemove;
   }
 }

@@ -16,6 +16,7 @@ export class CreateEstabelecimentoDto {
   @IsString()
   @IsNotEmpty()
   credencial: string;
+
   @MaxLength(255)
   @IsString()
   @IsNotEmpty()
