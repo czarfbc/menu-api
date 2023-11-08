@@ -21,8 +21,16 @@ export class EstabelecimentoService {
     return `This action returns all estabelecimento`;
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} estabelecimento`;
+  async findOneByCredential(credencial: string) {
+    const resultFindOneByCredential =
+      await this.prisma.estabelecimento.findUniqueOrThrow({
+        where: { credencial },
+      });
+    return resultFindOneByCredential;
+  }
+
+  findOneById(id: string) {
+    return `This action returns a #${id} estabelecimentoss`;
   }
 
   async update(id: string, updateEstabelecimentoDto: UpdateEstabelecimentoDto) {

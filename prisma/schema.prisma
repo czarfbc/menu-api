@@ -13,7 +13,7 @@ datasource db {
 model estabelecimento {
   id         String   @id @default(uuid())
   nome       String
-  credencial String
+  credencial String   @unique
   senha      String
   frete      Float
   createdAt  DateTime @default(now())

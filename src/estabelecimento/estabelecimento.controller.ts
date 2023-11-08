@@ -28,9 +28,14 @@ export class EstabelecimentoController {
     return this.estabelecimentoService.findAll();
   }
 
+  @Get('credential/:credencial')
+  findOneByCredential(@Param('credencial') credencial: string) {
+    return this.estabelecimentoService.findOneByCredential(credencial);
+  }
+
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.estabelecimentoService.findOne(id);
+  findOneById(@Param('id') id: string) {
+    return this.estabelecimentoService.findOneById(id);
   }
 
   @Patch(':id')

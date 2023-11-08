@@ -1,26 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { EstabelecimentoService } from 'src/estabelecimento/estabelecimento.service';
+import { JwtService } from '@nestjs/jwt';
+import { compare } from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
-  }
+  constructor(
+    private estabelecimentoService: EstabelecimentoService,
+    private jwtService: JwtService,
+  ) {}
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  async signIn(createAuthDto: CreateAuthDto) {
+    const findOneByCredential =
+      await this.estabelecimentoService.findOneByCredential(
+        createAuthDto.credencial,
+      );
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    const passwordMatch = await compare(
+      createAuthDto.senha,
+      findOneByCredential.senha,
+    );
+    if (!passwordMatch) {
+      throw new UnauthorizedException();
+    }
+    const payload = {
+      sub: findOneByCredential.id,
+      credencial: findOneByCredential.credencial,
+    };
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+      estabelecimento: {
+        id: findOneByCredential.id,
+        nome: findOneByCredential.nome,
+        credencial: findOneByCredential.credencial,
+        frete: findOneByCredential.frete,
+      },
+    };
   }
 }
