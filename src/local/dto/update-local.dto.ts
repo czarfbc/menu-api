@@ -1,10 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateEstabelecimentoDto } from './create-estabelecimento.dto';
+import { CreateLocalDto } from './create-local.dto';
 import { IsNumber, IsString, MaxLength, Min } from 'class-validator';
 
-export class UpdateEstabelecimentoDto extends PartialType(
-  CreateEstabelecimentoDto,
-) {
+export class UpdateLocalDto extends PartialType(CreateLocalDto) {
   @MaxLength(255)
   @IsString()
   nome: string;

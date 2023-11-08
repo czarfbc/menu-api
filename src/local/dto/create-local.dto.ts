@@ -6,24 +6,24 @@ import {
   Min,
 } from 'class-validator';
 
-export class CreateEstabelecimentoDto {
+export class CreateLocalDto {
   @MaxLength(255)
   @IsString()
   @IsNotEmpty()
-  nome: string;
+  name: string;
 
   @MaxLength(255)
   @IsString()
   @IsNotEmpty()
-  credencial: string;
+  credential: string;
 
   @MaxLength(255)
   @IsString()
   @IsNotEmpty()
-  senha: string;
+  password: string;
 
   @Min(0)
   @IsNumber()
   @IsNotEmpty()
-  frete: number;
+  freigt: number;
 }

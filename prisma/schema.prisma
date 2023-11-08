@@ -10,12 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model estabelecimento {
+model Local {
   id         String   @id @default(uuid())
-  nome       String
-  credencial String   @unique
-  senha      String
-  frete      Float
+  name       String
+  credential String   @unique
+  password   String
+  freigt     Float
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }

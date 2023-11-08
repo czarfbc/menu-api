@@ -4,10 +4,10 @@ export class CreateAuthDto {
   @MaxLength(255)
   @IsString()
   @IsNotEmpty()
-  credencial: string;
+  credential: string;
 
   @MaxLength(255)
   @IsString()
   @IsNotEmpty()
-  senha: string;
+  password: string;
 }
