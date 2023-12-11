@@ -1,40 +1,26 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { LocalService } from 'src/local/local.service';
-import { JwtService } from '@nestjs/jwt';
-import { compare } from 'bcrypt';
+import { UpdateAuthDto } from './dto/update-auth.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private localService: LocalService,
-    private jwtService: JwtService,
-  ) {}
+  create(createAuthDto: CreateAuthDto) {
+    return 'This action adds a new auth';
+  }
 
-  async signIn(createAuthDto: CreateAuthDto) {
-    const findOneByCredential = await this.localService.findOneByCredential(
-      createAuthDto.credential,
-    );
+  findAll() {
+    return `This action returns all auth`;
+  }
 
-    const passwordMatch = await compare(
-      createAuthDto.password,
-      findOneByCredential.password,
-    );
-    if (!passwordMatch) {
-      throw new UnauthorizedException();
-    }
-    const payload = {
-      sub: findOneByCredential.id,
-      credential: findOneByCredential.credential,
-    };
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-      estabelecimento: {
-        id: findOneByCredential.id,
-        name: findOneByCredential.name,
-        credential: findOneByCredential.credential,
-        freigt: findOneByCredential.freigt,
-      },
-    };
+  findOne(id: number) {
+    return `This action returns a #${id} auth`;
+  }
+
+  update(id: number, updateAuthDto: UpdateAuthDto) {
+    return `This action updates a #${id} auth`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} auth`;
   }
 }

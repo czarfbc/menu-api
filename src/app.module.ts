@@ -1,12 +1,22 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LocalModule } from './local/local.module';
-import { PrismaModule } from './prisma/prisma.module';
+import { PrismaModule } from './database/prisma.module';
+import { AdminModule } from './admin/admin.module';
+import { ProductModule } from './product/product.module';
+import { UserModule } from './user/user.module';
+import { OrderModule } from './order/order.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [LocalModule, PrismaModule, AuthModule],
+  imports: [
+    PrismaModule,
+    AdminModule,
+    ProductModule,
+    UserModule,
+    OrderModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
